@@ -1,0 +1,18 @@
+# Flutter
+**/build/
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/android/local.properties
+**/android/key.properties
+**/*.jks
+**/*.keystore
+**/ios/Pods/
+**/ios/.symlinks/
+
+# Editor
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

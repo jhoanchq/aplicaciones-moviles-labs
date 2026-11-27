@@ -1,0 +1,24 @@
+name: lab12_sqlite
+description: "Laboratorio 12: Persistencia con SQLite. Una app Flutter por laboratorio."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  sqflite: ^2.4.2
+  path: ^1.9.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  # Solo para pruebas en la VM; no se incluye en el APK.
+  sqflite_common_ffi: ^2.4.7
+
+flutter:
+  uses-material-design: true
