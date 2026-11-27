@@ -3,6 +3,7 @@
 
 **Curso:** Aplicaciones Móviles · 2026-II
 **Proyecto:** `lab14_api_get`
+**Demo web:** https://jhoanchq.github.io/aplicaciones-moviles-labs/lab14_api_get/
 
 ## Objetivo
 
@@ -103,3 +104,14 @@ Instalar en un teléfono conectado por USB:
 ```bash
 adb install -r build/app/outputs/flutter-apk/app-release.apk
 ```
+
+## Ejecutar en web (demostración)
+
+```bash
+flutter run -d chrome
+```
+
+En el navegador no existe `sqflite`: la app cambia automáticamente a un
+almacenamiento en memoria, muestra un aviso y conserva toda la interfaz CRUD.
+En Android/iOS se sigue usando SQLite real. La exportación del laboratorio 13
+se descarga como archivo JSON desde el navegador.

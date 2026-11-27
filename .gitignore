@@ -16,3 +16,6 @@
 *.iml
 .DS_Store
 Thumbs.db
+
+# APK locales (se publican en Releases)
+dist/

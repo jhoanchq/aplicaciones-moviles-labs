@@ -10,6 +10,7 @@
 // HomeScreen no conoce SQLite: solo escucha el ValueNotifier compartido.
 // ============================================================================
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import '../components/menu-card.dart';
@@ -57,6 +58,10 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _Encabezado(),
+                  if (kIsWeb) ...[
+                    const SizedBox(height: 16),
+                    const _ModoWebBanner(),
+                  ],
                   const SizedBox(height: 22),
                   _Bienvenida(),
                   const SizedBox(height: 22),
@@ -381,6 +386,43 @@ class _TipCard extends StatelessWidget {
                 fontSize: 13,
                 height: 1.4,
                 color: Color(0xFF1E40AF),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+/// Aviso que solo aparece cuando la app se ejecuta en un navegador.
+class _ModoWebBanner extends StatelessWidget {
+  const _ModoWebBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF7ED),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFFED7AA)),
+      ),
+      child: const Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.public_rounded, color: Color(0xFFC2410C), size: 20),
+          SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              'Modo web de demostración: SQLite y los archivos se ejecutan en '
+              'Android/iOS. Aquí los datos viven en memoria y se reinician al '
+              'recargar la página.',
+              style: TextStyle(
+                fontSize: 12.5,
+                height: 1.4,
+                color: Color(0xFF9A3412),
               ),
             ),
           ),

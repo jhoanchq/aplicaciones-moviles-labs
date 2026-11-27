@@ -15,6 +15,7 @@
 // la vida de la aplicación y evitar abrir la base de datos varias veces.
 // ============================================================================
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -35,6 +36,29 @@ class DatabaseHelper {
   // Aquí se guarda la conexión abierta. Es `static` porque pertenece a la
   // clase, no a un objeto concreto.
   static Database? _baseDatos;
+
+  // --------------------------------------------------------------------------
+  // MODO WEB DE DEMOSTRACIÓN
+  // --------------------------------------------------------------------------
+  // sqflite no está disponible en el navegador. Para que la app pueda
+  // ejecutarse en web se usa una lista en memoria con la misma interfaz.
+  // En Android/iOS el código sigue usando SQLite real.
+  static final List<Producto> _memoria = <Producto>[];
+  static int _siguienteId = 1;
+  static bool _memoriaInicializada = false;
+
+  void _inicializarMemoria() {
+    if (_memoriaInicializada) return;
+
+    _memoria.addAll(const [
+      Producto(id: 1, nombre: 'Laptop HP', precio: 2500, stock: 5),
+      Producto(id: 2, nombre: 'Mouse Logitech', precio: 45, stock: 20),
+      Producto(id: 3, nombre: 'Teclado Genius', precio: 65, stock: 12),
+      Producto(id: 4, nombre: 'Monitor Samsung', precio: 750, stock: 8),
+    ]);
+    _siguienteId = 5;
+    _memoriaInicializada = true;
+  }
 
   /// Devuelve la conexión abierta. Si todavía no existe, la inicializa.
   ///
@@ -130,6 +154,13 @@ class DatabaseHelper {
   ///
   /// Devuelve el `id` que SQLite generó automáticamente.
   Future<int> insertarProducto(Producto producto) async {
+    if (kIsWeb) {
+      _inicializarMemoria();
+      final nuevo = producto.copyWith(id: _siguienteId++);
+      _memoria.add(nuevo);
+      return nuevo.id;
+    }
+
     final db = await database;
 
     // toMap() incluye el id. En una inserción nueva el id todavía no existe,
@@ -142,6 +173,11 @@ class DatabaseHelper {
 
   /// READ: obtiene todos los productos ordenados por id.
   Future<List<Producto>> obtenerProductos() async {
+    if (kIsWeb) {
+      _inicializarMemoria();
+      return List<Producto>.unmodifiable(_memoria);
+    }
+
     final db = await database;
 
     // query() equivale a: SELECT * FROM productos ORDER BY id ASC
@@ -157,6 +193,14 @@ class DatabaseHelper {
   ///
   /// Devuelve la cantidad de filas actualizadas (1 si encontró el id).
   Future<int> actualizarProducto(Producto producto) async {
+    if (kIsWeb) {
+      _inicializarMemoria();
+      final indice = _memoria.indexWhere((p) => p.id == producto.id);
+      if (indice == -1) return 0;
+      _memoria[indice] = producto;
+      return 1;
+    }
+
     final db = await database;
 
     // El id no se actualiza: se usa únicamente para ubicar la fila.
@@ -176,6 +220,13 @@ class DatabaseHelper {
   ///
   /// Devuelve la cantidad de filas eliminadas.
   Future<int> eliminarProducto(int id) async {
+    if (kIsWeb) {
+      _inicializarMemoria();
+      final antes = _memoria.length;
+      _memoria.removeWhere((p) => p.id == id);
+      return antes - _memoria.length;
+    }
+
     final db = await database;
 
     return db.delete('productos', where: 'id = ?', whereArgs: [id]);
@@ -186,6 +237,13 @@ class DatabaseHelper {
   /// Es útil al terminar la app o al ejecutar pruebas automatizadas, para
   /// que la siguiente llamada vuelva a abrir la base de datos desde cero.
   Future<void> cerrar() async {
+    if (kIsWeb) {
+      _memoria.clear();
+      _memoriaInicializada = false;
+      _siguienteId = 1;
+      return;
+    }
+
     if (_baseDatos != null) {
       await _baseDatos!.close();
       _baseDatos = null;

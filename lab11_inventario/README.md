@@ -3,6 +3,7 @@
 
 **Curso:** Aplicaciones Móviles · 2026-II
 **Proyecto:** `lab11_inventario`
+**Demo web:** https://jhoanchq.github.io/aplicaciones-moviles-labs/lab11_inventario/
 
 ## Objetivo
 

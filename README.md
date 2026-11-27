@@ -17,18 +17,31 @@ agrega POST. **No son pantallas de una sola app**: son cinco proyectos distintos
 
 ## APKs
 
-Los APK compilados están en la carpeta [`dist/`](dist/):
+Los APK se publican en la sección **Releases** del repositorio:
 
-| Laboratorio | APK |
-|-------------|-----|
-| 11 | `dist/lab11_inventario.apk` |
-| 12 | `dist/lab12_sqlite.apk` |
-| 13 | `dist/lab13_preferencias.apk` |
-| 14 | `dist/lab14_api_get.apk` |
-| 15 | `dist/lab15_api_post.apk` |
+| Laboratorio | Descarga directa |
+|-------------|------------------|
+| 11 | [lab11_inventario.apk](https://github.com/jhoanchq/aplicaciones-moviles-labs/releases/download/v1.0.0/lab11_inventario.apk) |
+| 12 | [lab12_sqlite.apk](https://github.com/jhoanchq/aplicaciones-moviles-labs/releases/download/v1.0.0/lab12_sqlite.apk) |
+| 13 | [lab13_preferencias.apk](https://github.com/jhoanchq/aplicaciones-moviles-labs/releases/download/v1.0.0/lab13_preferencias.apk) |
+| 14 | [lab14_api_get.apk](https://github.com/jhoanchq/aplicaciones-moviles-labs/releases/download/v1.0.0/lab14_api_get.apk) |
+| 15 | [lab15_api_post.apk](https://github.com/jhoanchq/aplicaciones-moviles-labs/releases/download/v1.0.0/lab15_api_post.apk) |
 
-También se publican como archivos adjuntos en la sección **Releases** del
-repositorio.
+También quedan copias locales en `dist/`.
+
+## Demos web
+
+| Laboratorio | Abrir en el navegador |
+|-------------|-----------------------|
+| 11 | [lab11_inventario](https://jhoanchq.github.io/aplicaciones-moviles-labs/lab11_inventario/) |
+| 12 | [lab12_sqlite](https://jhoanchq.github.io/aplicaciones-moviles-labs/lab12_sqlite/) |
+| 13 | [lab13_preferencias](https://jhoanchq.github.io/aplicaciones-moviles-labs/lab13_preferencias/) |
+| 14 | [lab14_api_get](https://jhoanchq.github.io/aplicaciones-moviles-labs/lab14_api_get/) |
+| 15 | [lab15_api_post](https://jhoanchq.github.io/aplicaciones-moviles-labs/lab15_api_post/) |
+
+En el navegador, los laboratorios 12 a 15 usan almacenamiento en memoria porque
+`sqflite` no existe en web. En Android/iOS se usa SQLite real. El laboratorio 13
+descarga el JSON desde el navegador.
 
 ## Requisitos
 
